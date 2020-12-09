@@ -1,4 +1,6 @@
 # Vagrant-Docker-Ubuntu-xRDP
+## Note
+Make sure to create a folder named "data" for shared folder.
 ## Reference
 - https://dev.to/mattdark/using-docker-as-provider-for-vagrant-10me
 - https://github.com/scottyhardy/docker-remote-desktop/blob/master/Dockerfile
