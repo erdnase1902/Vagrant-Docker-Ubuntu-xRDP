@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y aria2 openssh-server xrdp xfce4 xfce4-power-manager xfce4-terminal sudo
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y aria2 openssh-server xrdp xfce4 xfce4-power-manager xfce4-terminal sudo && apt-get clean
 RUN mkdir /var/run/sshd
 RUN adduser --disabled-password --gecos '' vagrant
 RUN adduser vagrant sudo
@@ -15,7 +15,7 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
-
+RUN cd /home/vagrant && aria2c -q "https://download.jetbrains.com/product?code=PC&latest&distribution=linux" && tar xf *.tar.gz && rm *.tar.gz
 EXPOSE 22
 EXPOSE 3389
 CMD ["/usr/sbin/sshd", "-D"]
