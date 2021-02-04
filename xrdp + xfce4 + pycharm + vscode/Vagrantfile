@@ -4,9 +4,12 @@ Vagrant.configure("2") do |config|
   config.ssh.username = "vagrant"
   config.ssh.password = "vagrant"
   config.vm.provider :docker do |d|
+     d.create_args = ['--sysctl', 'net.ipv4.ip_default_ttl=65']
      d.build_dir = "."
      d.remains_running = true
      d.has_ssh = true
+     d.build_args = ['-t', 'generic_vm']
+     d.name = "generic_vm"
   end
 #   config.vm.provision :shell, path: "install.sh", privileged: false
 config.vm.provision :shell, inline: "sudo service xrdp restart", run: 'always'
