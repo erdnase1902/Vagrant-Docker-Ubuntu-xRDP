@@ -21,6 +21,7 @@ RUN cd /home/vagrant && aria2c -q "https://download.jetbrains.com/product?code=P
 USER root
 RUN cd /home/vagrant && aria2c -q "https://go.microsoft.com/fwlink/?LinkID=760868" && DEBIAN_FRONTEND="noninteractive" apt install ./*.deb && rm *.deb
 RUN curl https://get.docker.com/ | bash
+RUN usermod -aG docker $USER
 EXPOSE 22
 EXPOSE 3389
 CMD ["/usr/sbin/sshd", "-D"]
