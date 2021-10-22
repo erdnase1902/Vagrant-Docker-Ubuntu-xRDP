@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y python3 python3-pip tmux git htop build-essential aria2 openssh-server xrdp xfce4 xfce4-power-manager xfce4-terminal sudo && apt-get clean
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y curl python3 python3-pip tmux git htop build-essential aria2 openssh-server xrdp xfce4 xfce4-power-manager xfce4-terminal sudo && apt-get clean
 RUN mkdir /var/run/sshd
 RUN adduser --disabled-password --gecos '' vagrant
 RUN adduser vagrant sudo
@@ -20,6 +20,7 @@ USER vagrant
 RUN cd /home/vagrant && aria2c -q "https://download.jetbrains.com/product?code=PC&latest&distribution=linux" && tar xf *.tar.gz && rm *.tar.gz
 USER root
 RUN cd /home/vagrant && aria2c -q "https://go.microsoft.com/fwlink/?LinkID=760868" && DEBIAN_FRONTEND="noninteractive" apt install ./*.deb && rm *.deb
+RUN curl https://get.docker.com/ | bash
 EXPOSE 22
 EXPOSE 3389
 CMD ["/usr/sbin/sshd", "-D"]
