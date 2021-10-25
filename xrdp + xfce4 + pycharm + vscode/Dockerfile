@@ -24,4 +24,4 @@ RUN curl https://get.docker.com/ | bash
 RUN usermod -aG docker vagrant
 EXPOSE 22
 EXPOSE 3389
-CMD ["/usr/sbin/sshd", "-D"]
+CMD service docker start; /usr/sbin/sshd -D
