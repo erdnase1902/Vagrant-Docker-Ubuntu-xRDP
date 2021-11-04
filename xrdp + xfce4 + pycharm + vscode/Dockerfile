@@ -18,7 +18,7 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 USER vagrant
 RUN cd /home/vagrant && aria2c -q "https://download.jetbrains.com/product?code=PCC&latest&distribution=linux" && tar xf *.tar.gz && rm *.tar.gz
-RUN aria2c -q "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip" && unzip ngrok-stable-linux-amd64.zip && rm ngrok-stable-linux-amd64.zip
+RUN cd /home/vagrant && aria2c -q "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip" && unzip ngrok-stable-linux-amd64.zip && rm ngrok-stable-linux-amd64.zip
 USER root
 RUN cd /home/vagrant && aria2c -q "https://go.microsoft.com/fwlink/?LinkID=760868" && DEBIAN_FRONTEND="noninteractive" apt install ./*.deb && rm *.deb
 RUN curl https://get.docker.com/ | bash
