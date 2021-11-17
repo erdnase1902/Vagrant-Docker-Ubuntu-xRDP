@@ -9,7 +9,6 @@ Vagrant.configure("2") do |config|
      d.has_ssh = true
   end
 #   config.vm.provision :shell, path: "install.sh", privileged: false
-config.vm.synced_folder "data", "/vagrant_data"
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
 config.vm.network "private_network", ip: "192.168.33.10"

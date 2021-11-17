@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y openssh-server sudo
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y xrdp xfce4 openssh-server sudo
 RUN mkdir /var/run/sshd
 RUN adduser --disabled-password --gecos '' vagrant
 RUN adduser vagrant sudo
