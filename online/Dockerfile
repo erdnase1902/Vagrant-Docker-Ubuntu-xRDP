@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y curl zip python3 python3-pip tmux git htop build-essential aria2 openssh-server xrdp xfce4* sudo vim && apt-get clean
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y curl zip python3 python3-pip tmux git htop build-essential aria2 openssh-server xrdp xfce4* sudo vim firefox && apt-get clean
 RUN mkdir /var/run/sshd
 RUN adduser --disabled-password --gecos '' vagrant
 RUN adduser vagrant sudo
