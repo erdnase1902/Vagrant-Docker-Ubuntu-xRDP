@@ -1,3 +1,6 @@
+# To use x11 in ubuntu host, first run "xhost+" in the host
+
+
 module OS
   def OS.windows?
       (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
@@ -23,16 +26,31 @@ Vagrant.configure("2") do |config|
   config.ssh.password = "vagrant"
   config.vm.provider :docker do |d|
     if OS.windows?
-      d.create_args = ['--sysctl', 'net.ipv4.ip_default_ttl=66', '--privileged=true', '-v', '/var/lib/docker', '--shm-size', '2gb', '-e', 'DISPLAY=\'host.docker.internal:0.0\'']
+      d.create_args = ['--sysctl', 'net.ipv4.ip_default_ttl=66', '--privileged=true', '-v', '/var/lib/docker', '--shm-size', '2gb']
     elsif OS.mac?
-      d.create_args = ['--sysctl', 'net.ipv4.ip_default_ttl=66', '--privileged=true', '-v', '/var/lib/docker', '--shm-size', '2gb', '-e', 'DISPLAY=\'host.docker.internal:0.0\'']
+      d.create_args = ['--sysctl', 'net.ipv4.ip_default_ttl=66', '--privileged=true', '-v', '/var/lib/docker', '--shm-size', '2gb']
     else
-      d.create_args = ['--sysctl', 'net.ipv4.ip_default_ttl=66', '--privileged=true', '-v', '/var/lib/docker', '--shm-size', '2gb',  '-e', 'DISPLAY=\':0\'', '-v', '/tmp/.X11-unix:/tmp/.X11-unix']
+      d.create_args = ['--sysctl', 'net.ipv4.ip_default_ttl=66', '--privileged=true', '-v', '/var/lib/docker', '--shm-size', '2gb', '-v', '/tmp/.X11-unix:/tmp/.X11-unix']
     end
      d.image = "erdnase/vm:generic"
      d.remains_running = true
      d.has_ssh = true
   end
+
+
+if OS.windows?
+  config.vm.provision "shell", inline: <<-SHELL
+  echo "export DISPLAY=host.docker.internal:0.0" >> /home/vagrant/.profile
+  SHELL
+elsif OS.mac?
+  config.vm.provision "shell", inline: <<-SHELL
+  echo "export DISPLAY=host.docker.internal:0.0" >> /home/vagrant/.profile
+  SHELL
+else
+  config.vm.provision "shell", inline: <<-SHELL
+  echo "export DISPLAY=:0" >> /home/vagrant/.profile
+  SHELL
+end
 #   config.vm.provision :shell, path: "install.sh", privileged: false
 config.vm.provision :shell, inline: "sudo service xrdp restart", run: 'always'
 # config.vm.synced_folder "data", "/vagrant_data"
