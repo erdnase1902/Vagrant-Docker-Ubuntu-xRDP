@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y curl zip python3 python3-pip tmux git htop build-essential aria2 openssh-server xrdp xfce4* sudo vim firefox && apt-get clean
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y net-tools curl zip python3 python3-pip tmux git htop build-essential aria2 openssh-server xrdp xfce4* sudo vim firefox && apt-get clean
 RUN mkdir /var/run/sshd
 RUN adduser --disabled-password --gecos '' vagrant
 RUN adduser vagrant sudo
@@ -23,6 +23,5 @@ USER root
 RUN cd /home/vagrant && aria2c -q "https://go.microsoft.com/fwlink/?LinkID=760868" && DEBIAN_FRONTEND="noninteractive" apt install ./*.deb && rm *.deb && apt-get clean
 RUN curl https://get.docker.com/ | bash
 RUN usermod -aG docker vagrant
-EXPOSE 22
-EXPOSE 3389
+EXPOSE 1-65535
 CMD service docker start; /usr/sbin/sshd -D
